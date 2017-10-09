@@ -70,12 +70,13 @@ bd(fitbd)
 # Find a time-calibrated phylogeny for a group that interests you (ideally with more than 30 tips and fewer than 200). Do the following: 
 
 # (1) Describe the clade (including a description of the number of tips in the tree and the total number of species in the clades) and provide a reference or citation to the source.
-fish.tree <- read.tree("etheostoma_percina_chrono.tre")
-# This phylogenetic tree shows the relationships of darters, a species-rich clade of North American freshwater fishes. The data is a near-complete taxon sampling of 245 out of 248 species.
-# Source: Near et al. (2011) Phylogeny and temporal diversification of darters (Percidae: Etheostomatinae). Systematic Biology.
+cetart.tree <- read.nexus("consensusTree_10kTrees_Cetartiodactyla_Version1_missing.nex")
+# This data is on even-toed ungulates and cetaceans (clade Cetartiodactyla) has a total of 299 species with zero species missing. Since I had the option to remove specific species from the tree, I chose to remove 5 random species from Artiodactyla Cervidae and 3 from Artiodactyla Suidae for a total of 8 missing species. This means the tree sequenced 291 out of 299.
+# Source: http://10ktrees.nunn-lab.org/Cetartiodactyla/processRequest.php.
 
 # (2) Fit a birthdeath model to this tree and report b and d. 
-fitbd.fish <- birthdeath(fish.tree) # code originally not working because is.binary = FALSE
+plot(cetart.tree)
+fitbd.cetart <- birthdeath(cetart.tree) # code originally not working because is.binary = FALSE
 is.binary(fish.tree)
 fish.tree <- multi2di(fish.tree)
 fitbd
