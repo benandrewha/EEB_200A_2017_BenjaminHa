@@ -48,11 +48,14 @@ for(i in 1:num_simulations) {
 } # long loop, so let it run on its own
 
 # create a histogram of the simulated birth rate
+par(mfrow=c(1,1), mar=c(4, 4, 3, 2))
 hist(gamma_null) 
 
 # now have arrove to show where the gamma value lies on the simulated tree
 arrows(snake.gamma, 40, snake.gamma, 0, col="red", lwd=2)
+snake.gamma
 
+# Conclusion: The gamma value is -3.241081. Due to incomplete sampling, the snake.gamma value suggests the birth rate is skewed in relation to the simulated data. Again, this suggests the speciation rate was initially high, and then slowed down over time.
 
 ### Exercise 4
 # What is the birth rate and death rate of the homalopsid tree
@@ -60,7 +63,7 @@ library(phytools)
 fitbd <- birthdeath(snake.tree)
 fitbd
 bd(fitbd)
-# ??? answer looks shady too. Birth is 0.06839495. Death is zero.
+# Birth rate is 0.06839495. Death rate is zero. The death rate is definitely skeptical, but I assume that since the snake.tree has incomplete sampling that it would skew the birth-death rates since birth-death rates are conditioned to full sampling of a tree.
 
 
 ### Exercise 5
@@ -76,7 +79,7 @@ fitbd.fish <- birthdeath(fish.tree) # code originally not working because is.bin
 is.binary(fish.tree)
 fish.tree <- multi2di(fish.tree)
 fitbd
-bd(fitbd)
+bd(fitbd) # death rate is also zero???
 
 # (3) Perform an MCCR test and describe whether the gamma value is extreme or not given the level of sampling in the tree.
 obj <- ltt(fish.tree,
@@ -85,11 +88,11 @@ obj
 fish.gamma <- obj$gamma # save only the gamma value into an object
 fish.gamma
 
-age <- 20
-richness <- 248
+age <- 20 # arbitrary number that you selected
+richness <- 248 # total number of species
 fish.birth = (log(richness) - log(2)) / age 
 
-missing.fish <- 3
+missing.fish <- 3 # taken from fact that 245 out of 248 species were sequenced
 num_simulations <- 200
 
 gamma.null.fish <- numeric(num_simulations)
@@ -103,4 +106,4 @@ for(i in 1:num_simulations) {
 hist(gamma.null.fish) 
 arrows(fish.gamma, 40, fish.gamma, 0, col="forest green", lwd=3)
 
-# Conclusion: The gamma value is 0.2007 and when comparing the gamma value to the simulated data, the gamma value is not too extreme. It is still somewhat skewed (positive), which suggests the speciation rate was slow initially and then increased  later. The histogram reflects a similar attribute since the speciation frequency is still relatively high after the mid-range. 
+# Conclusion: The gamma value is 0.2007 and when comparing the gamma value to the simulated data, the gamma value is not too extreme. It is still somewhat skewed (positive), which suggests the speciation rate was slow initially and then increased  later; however, since the gamma value is relatively close to zero, I would anticipate the speciation rate did not increase significantly over time.
